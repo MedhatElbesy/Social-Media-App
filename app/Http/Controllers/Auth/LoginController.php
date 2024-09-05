@@ -6,7 +6,6 @@ use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -14,7 +13,7 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return ApiResponse::sendResponse(401,'Invalid credentials');
+            return ApiResponse::sendResponse(401,__('messages.Invalid_credentials'));
         }
 
         $user = Auth::user();

@@ -17,6 +17,12 @@ class UserController extends Controller
     {
         try {
             $follower = Auth::user();
+
+            if ($follower->id === $user->id) {
+                return ApiResponse::sendResponse(400, __('messages.cannot_follow_yourself'));
+            }
+
+
             $follower->following()->attach($user->id);
             broadcast(new UserFollowedEvent($follower, $user));
 
